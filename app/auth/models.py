@@ -5,8 +5,9 @@ Developer : ANAND VITTHAL ADAKE
 Gmail     : anandadake007@gmail.com
 GitHub    : anandadake/flask-jwt-based-user-authorization
 """
-
 import json
+
+from werkzeug.security import generate_password_hash
 
 from app import db
 
@@ -39,12 +40,12 @@ class User(db.Model):
             'activated': self.activated
         }
 
-    def __init__(self, username, firstName, lastName, email, password, authorities, activated=True):
+    def __init__(self, username, firstName, lastName, email, password, authorities, activated=False):
         self.username = username
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
-        self.password = password
+        self.password = generate_password_hash(password, method='sha256')
         self.authorities = authorities
         self.activated = activated
 
